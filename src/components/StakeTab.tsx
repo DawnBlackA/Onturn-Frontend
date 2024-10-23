@@ -16,7 +16,7 @@ import { SYslisBNB } from "@/contracts/tokens/SY";
 import { useSY } from "@/hooks/useSY";
 import { ChainETHSymbol } from "@/contracts/chains";
 import { useYT } from "@/hooks/useYT";
-import { stake } from "@/hooks/usePOT";
+
 import { POTslisBNB } from "@/contracts/tokens/POT";
 
 // const mockTokens = {
@@ -52,7 +52,9 @@ export default function StakeTab() {
   const [PTAmount, setPTAmount] = useState("");
   const [YTAmount, setYTAmount] = useState("");
   const [NTSymbol, setNTSymbol] = useState<string | undefined>("");
+  // @ts-ignore
   const UseSY = useSY(SY,publicClient,chainId);
+  // @ts-ignore
   const UseYT = useYT(YT);
   const [CurrencyList, setCurrencyList] = useState<CurrencySelectListType>();
 

@@ -15,40 +15,45 @@ export function useSY(token:Currency,publicClient:PublicClient,chainId:number) {
     const [totalSupply,settotalSupply] = useState<Decimal>();
 
     useEffect(() => {
-        async function _exchangeRate() {
+        if (token) {
+            async function _exchangeRate() {
 
-            if (token?.chainId == chainId) {
-                const result = await publicClient?.readContract({
-                    address: (token as Token)?.address,
-                    abi: SYAbi,
-                    functionName: 'exchangeRate',
-                })
-                if (result) {
-                    return new Decimal(formatUnits(result, token?.decimals))
-                }
-            }
-            
-        }
-        _exchangeRate().then(setExchangeRate)
-
-        async function _totalSupply() {
-
-            if (token?.chainId == chainId) {
-                try {
+                if (token?.chainId == chainId) {
                     const result = await publicClient?.readContract({
+                        // @ts-ignore
                         address: (token as Token)?.address,
                         abi: SYAbi,
-                        functionName: 'totalSupply',
+                        functionName: 'exchangeRate',
                     })
                     if (result) {
-                        return new Decimal(formatUnits(result, token?.decimals))
+                        return new Decimal(formatUnits(result, token.decimals))
                     }
-                } catch{
                 }
+                
             }
-
+            _exchangeRate().then(setExchangeRate)
+    
+            async function _totalSupply() {
+    
+                if (token?.chainId == chainId) {
+                    try {
+                        const result = await publicClient?.readContract({
+                            // @ts-ignore
+                            address: (token as Token)?.address,
+                            abi: SYAbi,
+                            functionName: 'totalSupply',
+                        })
+                        if (result) {
+                            return new Decimal(formatUnits(result, token.decimals))
+                        }
+                    } catch{
+                    }
+                }
+    
+            }
+            _totalSupply().then(settotalSupply)
         }
-        _totalSupply().then(settotalSupply)
+        
     },[token, chainId])
 
     return {

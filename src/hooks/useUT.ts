@@ -19,6 +19,7 @@ export function useUTView(token:Currency) {
     useEffect(() => {
         async function _() {
             return await publicClient?.readContract({
+                // @ts-ignore
                 address: (token as Token)?.address,
                 abi: UT,
                 functionName: 'symbol',
