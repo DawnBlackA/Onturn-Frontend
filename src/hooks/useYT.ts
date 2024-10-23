@@ -1,5 +1,5 @@
 import { YTAbi } from "@/contracts/abis/YT";
-import { Currency } from "@/packages/core";
+import { Currency, Token } from "@/packages/core";
 import Decimal from "decimal.js-light";
 import { useState, useEffect } from "react";
 import { formatUnits } from "viem";
@@ -23,7 +23,8 @@ export function useYT(token:Currency) {
 
                 if (token?.chainId == chainId) {
                     const result = await publicClient?.readContract({
-                        address: token?.address,
+                        // @ts-ignore
+                        address: (token as Token).address,
                         abi: YTAbi,
                         functionName: 'totalSupply',
                     })
@@ -38,7 +39,8 @@ export function useYT(token:Currency) {
     
                 if (token?.chainId == chainId) {
                     const result = await publicClient?.readContract({
-                        address: token?.address,
+                        // @ts-ignore
+                        address: (token as Token)?.address,
                         abi: YTAbi,
                         functionName: 'currentYields',
                     })
@@ -51,7 +53,8 @@ export function useYT(token:Currency) {
     
             async function totalRedeemableYields() {
                 const result = await publicClient?.readContract({
-                    address: token?.address,
+                    // @ts-ignore
+                    address: (token as Token).address,
                     abi: YTAbi,
                     functionName: 'totalRedeemableYields',
                 })
