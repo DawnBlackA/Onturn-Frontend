@@ -9,14 +9,13 @@ export function stake({
     YT,
     SYAmount,
     lockupDays,
-    positionOwner,
+    
 }:{
-    POT:POT,
+    POT:Currency,
     PT:Currency,
     YT:Currency,
-    SYAmount:Decimal,
+    SYAmount:string,
     lockupDays:number,
-    positionOwner?:string,
 }) {
 
     const account = useAccount();
@@ -24,10 +23,10 @@ export function stake({
 
     writeContract({
         abi: POTAbi,
-        address: POT.address,
+        address: (POT as Token).address,
         functionName: 'stake',
         args: [
-            BigInt(SYAmount.toFixed(18)),
+            BigInt(SYAmount),
             BigInt(lockupDays),
             account.address,
             (PT as Token).address,

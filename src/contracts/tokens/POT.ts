@@ -1,3 +1,4 @@
+import { Token } from "@/packages/core";
 import { POTAddressMap } from "../addressMap/POTAddressMap";
 import { ChainId } from "../chains";
 
@@ -9,14 +10,14 @@ export type POT = {
     symbol: string,
 };
 
-export const POTslisBNB: {[chainId: number]: POT} = {
+export const POTslisBNB: {[chainId: number]: Token} = {
 
-    [ChainId.BSC_TESTNET]:{
-        chainId: ChainId.BSC_TESTNET,
-        address: POTAddressMap[ChainId.BSC_TESTNET].slisBNB,
-        decimals: 18,
-        name: 'SlisBNB Position Option Token',
-        symbol: 'POT-slisBNB',
-    },
+    [ChainId.BSC_TESTNET]: new Token(
+        ChainId.BSC_TESTNET,
+        POTAddressMap[ChainId.BSC_TESTNET].slisBNB,
+        18,
+        'POT-slisBNB',
+        'SlisBNB Position Option Token',
+    ),
 
 }
